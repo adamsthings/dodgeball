@@ -1,13 +1,13 @@
 # ⚡ Dodgeball - MINIGAME  [SKRIPT]
 Advanced minigame skript based on the game dodgeball
 
-## Functions:
+## Functions
 ✅Skript plugin support
 ✅Physics
 ✅Arena editor
 ✅Join gui - Future plan
 
-## Commands:
+## Commands
 ➡️ Create an arena: /dodgeball create <arena>
 
 ➡️Edit arena: /dodgeball edit <arena> <name|cooldown|time> <value>
@@ -30,7 +30,8 @@ Advanced minigame skript based on the game dodgeball
 
 ➡️Skript Check: /dodgeball ping
 
-## ⚠️ Skript under development!
+## HELP
+⚠️ Skript under development!
 If you find any bugs or you have some suggestions please don't write here, to the comments!
 WRITE HERE: https://drum-resources.boards.net/thread/1/dodgeball-skript-issues-bugs-requests
 
