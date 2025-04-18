@@ -1,0 +1,162 @@
+# Dodgeball Skript
+# Version: Beta
+
+options:
+  prefix: &6[&aDodgeball&6] &f
+
+variables:
+  {dodgeball.lobby} = location
+
+command /dodgeball <text> [<text>] [<text>]:
+  trigger:
+    set {_arg1} to arg-1
+    if {_arg1} is "help":
+      send "{@prefix}&7Elérhető parancsok:"
+      send "&e/dodgeball create <aréna>&7 - Aréna létrehozása"
+      send "&e/dodgeball edit <aréna> <name|cooldown|time> <érték>"
+      send "&e/dodgeball setmaxplayers <aréna> <szám>"
+      send "&e/dodgeball setminplayers <aréna> <szám>"
+      send "&e/dodgeball setstartpos <aréna> <szám>"
+      send "&e/dodgeball setlobby&7 - Lobby beállítása"
+      send "&e/dodgeball join <aréna>&7 - Csatlakozás arénához"
+      send "&e/dodgeball menu&7 - Aréna GUI"
+      send "&e/dodgeball stats [játékos]&7 - Statisztikák"
+      send "&e/dodgeball language <hu|en>&7 - Nyelv kiválasztása"
+      send "&e/dodgeball ping&7 - Pong vissza"
+    else if {_arg1} is "ping":
+      send "{@prefix}&aPong!"
+    else if {_arg1} is "create":
+      if arg-2 is set:
+        set {dodgeball.%arg-2%.name} to arg-2
+        set {dodgeball.%arg-2%.cooldown} to 2
+        set {dodgeball.%arg-2%.time} to 60
+        set {dodgeball.%arg-2%.minplayers} to 2
+        set {dodgeball.%arg-2%.maxplayers} to 10
+        send "{@prefix}&aAréna létrehozva: &e%arg-2%"
+      else:
+        send "{@prefix}&cHasználat: /dodgeball create <név>"
+    else if {_arg1} is "edit":
+      if arg-2 is set and arg-3 is set and arg-4 is set:
+        if arg-3 is "name":
+          set {dodgeball.%arg-2%.name} to arg-4
+        else if arg-3 is "cooldown":
+          set {dodgeball.%arg-2%.cooldown} to arg-4 parsed as number
+        else if arg-3 is "time":
+          set {dodgeball.%arg-2%.time} to arg-4 parsed as number
+        send "{@prefix}&aSzerkesztve: &e%arg-2%"
+      else:
+        send "{@prefix}&cHasználat: /dodgeball edit <aréna> <name|cooldown|time> <érték>"
+    else if {_arg1} is "setmaxplayers":
+      set {dodgeball.%arg-2%.maxplayers} to arg-3 parsed as number
+      send "{@prefix}&aMax játékos: &e%arg-3%"
+    else if {_arg1} is "setminplayers":
+      set {dodgeball.%arg-2%.minplayers} to arg-3 parsed as number
+      send "{@prefix}&aMin játékos: &e%arg-3%"
+    else if {_arg1} is "setstartpos":
+      set {dodgeball.%arg-2%.startpos::%arg-3 parsed as number%} to location of player
+      send "{@prefix}&aStartpozíció %arg-3% beállítva!"
+    else if {_arg1} is "setlobby":
+      set {dodgeball.lobby} to location of player
+      send "{@prefix}&aLobby beállítva!"
+    else if {_arg1} is "language":
+      if arg-2 is "hu" or "en":
+        set {dodgeball.language.%player%} to arg-2
+        send "{@prefix}&aNyelv beállítva: &e%arg-2%"
+      else:
+        send "{@prefix}&cHasználat: /dodgeball language <hu|en>"
+    else if {_arg1} is "join":
+      if arg-2 is set:
+        set {dodgeball.players.%player%} to arg-2
+        send "{@prefix}&aCsatlakoztál az arénához: &e%arg-2%"
+      else:
+        send "{@prefix}&cHasználat: /dodgeball join <aréna>"
+    else if {_arg1} is "menu":
+      open virtual chest inventory with size 3 named "Dodgeball Arénák" to player
+      loop {dodgeball::*}:
+        set {_arena} to loop-value
+        format slot loop-number - 1 of player with paper named "&a%{dodgeball.%{_arena}%.name}%" to run:
+          execute player command "/dodgeball join %{_arena}%"
+    else if {_arg1} is "stats":
+      set {_target} to arg-2
+      if {_target} is not set:
+        set {_target} to player
+      set {_uuid} to uuid of {_target}
+      set {_yaml} to yaml file "plugins/dodgeball/stats.yml"
+      send "{@prefix}&aStatisztikák: &e%{_target}%"
+      send "&7Győzelmek: &e%{_yaml}'s value at ""players.%{_uuid}%.kills""%"
+    else:
+      send "{@prefix}&cIsmeretlen parancs. /dodgeball help"
+
+# Hógolyó dobás cooldown
+on right click with snowball:
+  if {dodgeball.players.%player%} is set:
+    set {_now} to now
+    set {_last} to {dodgeball.lastthrow.%player%}
+    if difference between {_now} and {_last} < 2 seconds:
+      cancel event
+      send "{@prefix}&cVárj egy kicsit a dobással!"
+      stop
+    set {dodgeball.lastthrow.%player%} to {_now}
+
+# Kidobás
+on projectile hit:
+  projectile is snowball
+  shooter is a player
+  hit entity is a player
+  cancel event
+  teleport hit entity to {dodgeball.lobby}
+  set game mode of hit entity to spectator
+  send "&c%hit entity% &7ki lett dobva!" to all players
+  addStat(shooter, "kills")
+
+# Automatikus meccsindítás
+every 5 seconds:
+  loop {dodgeball::*}:
+    set {_arena} to loop-value
+    set {_players::*} to all players where [{dodgeball.players.%input%} is {_arena}]
+    set {_min} to {dodgeball.%_arena%.minplayers}
+    set {_max} to {dodgeball.%_arena%.maxplayers}
+    if size of {_players::*} >= {_min}:
+      loop {_players::*}:
+        teleport loop-player to {dodgeball.%_arena%.startpos::1}
+        set loop-player's gamemode to survival
+        send "{@prefix}&aKezdődik az aréna: &e%{dodgeball.%_arena%.name}%"
+      wait 3 seconds
+      set {dodgeball.%_arena%.timeleft} to {dodgeball.%_arena%.time}
+      while {dodgeball.%_arena%.timeleft} > 0:
+        set {_active::*} to all players where [{dodgeball.players.%input%} is {_arena}]
+        if size of {_active::*} <= 1:
+          loop {_active::*}:
+            send "{@prefix}&aGyőztes: &e%loop-value%"
+            teleport loop-value to {dodgeball.lobby}
+            delete {dodgeball.players.%loop-value%}
+          exit loop
+        wait 1 second
+        remove 1 from {dodgeball.%_arena%.timeleft}
+      loop {_players::*}:
+        send "{@prefix}&cIdő lejárt! Döntetlen!"
+        teleport loop-player to {dodgeball.lobby}
+        delete {dodgeball.players.%loop-player%}
+
+on join:
+  send "{@prefix}&7Üdv! Használd: /dodgeball help"
+  if {dodgeball.language.%player%} is not set:
+    set {dodgeball.language.%player%} to "hu"
+
+on quit:
+  delete {dodgeball.players.%player%}
+
+on load:
+  if yaml file "plugins/dodgeball/stats.yml" doesn't exist:
+    create yaml file "plugins/dodgeball/stats.yml"
+
+function addStat(p: player, type: text):
+  set {_uuid} to uuid of {_p}
+  set {_path} to "players.%{_uuid}%.%{_type}%"
+  set {_yaml} to yaml file "plugins/dodgeball/stats.yml"
+  set {_value} to {_yaml}'s value at {_path}
+  if {_value} is not set:
+    set {_value} to 0
+  add 1 to {_value}
+  set {_yaml}'s value at {_path} to {_value}
+  save yaml file "plugins/dodgeball/stats.yml"
