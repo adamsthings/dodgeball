@@ -28,21 +28,26 @@ Dodge, throw, and compete with friends in this fast-paced minigame!
 /dodgeball join <arena>        # Join a dodgeball arena
 /dodgeball menu                # Open the GUI join menu (coming soon)
 /dodgeball stats [player]      # View player stats
-```bash
+```
 
 ### 🛠️ Arena Management
+```bash
 /dodgeball create <arena>                  # Create a new arena
 /dodgeball edit <arena> <option> <value>   # Edit arena settings (name, cooldown, time)
 /dodgeball setmaxplayers <arena> <number>  # Set maximum players
 /dodgeball setminplayers <arena> <number>  # Set minimum players
 /dodgeball setstartpos <arena> <number>    # Set spawn point for a specific player
 /dodgeball setlobby                        # Set the main dodgeball lobby
+```
 
 ### 🌐 Other
+```bash
 /dodgeball language <hu|en>   # Set script language
 /dodgeball ping               # Check if the script is active
+```
 
 ## ⚠️ Development Notice
+
 This Skript is currently under development.
 Found a bug or have an idea to improve the game?
 
