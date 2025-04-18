@@ -1,85 +1,57 @@
-# ⚡ Dodgeball - MINIGAME  [SKRIPT]
-Advanced minigame skript based on the game dodgeball
+# 🏐 Dodgeball Minigame Skript
 
-## Functions
-✅Skript plugin support
-✅Physics
-✅Arena editor
-✅Join gui - Future plan
+A fully customizable **Dodgeball** minigame for Minecraft, built using the [Skript](https://github.com/SkriptLang/Skript) plugin.  
+Dodge, throw, and compete with friends in this fast-paced minigame!
 
-## Commands
-➡️ Create an arena: /dodgeball create <arena>
+> ✅ Supports snowball physics  
+> ✅ Arena editor & setup commands  
+> ✅ Player stat tracking  
+> ✅ Multi-language support  
+> ✅ GUI join menu *(coming soon!)*  
 
-➡️Edit arena: /dodgeball edit <arena> <name|cooldown|time> <value>
+---
 
-➡️Set max players: /dodgeball setmaxplayers <arena> <number>
+## 🚀 Features
 
-➡️Set min players: /dodgeball setminplayers <arena> <number>
+- 🎯 **Physics-based snowballs** — they bounce and roll like real dodgeballs!
+- 🛠️ **Arena editor** — create and configure multiple arenas easily
+- 🌍 **Language support** — switch between English & Hungarian
+- 📊 **Player stats** — track how well you're doing
+- 🎮 **GUI join menu** *(planned)* — intuitive interface for joining games
 
-➡️Set the start position for a specific player: /dodgeball setstartpos <arena> <playernumber>
+---
 
-➡️Set the dodgeball lobby: /dodgeball setlobby
+## 🔧 Commands
 
-➡️Join an arena: /dodgeball join <arena>
+### 🎮 Gameplay
+```bash
+/dodgeball join <arena>        # Join a dodgeball arena
+/dodgeball menu                # Open the GUI join menu (coming soon)
+/dodgeball stats [player]      # View player stats
+```bash
 
-➡️Join gui: /dodgeball menu
+### 🛠️ Arena Management
+/dodgeball create <arena>                  # Create a new arena
+/dodgeball edit <arena> <option> <value>   # Edit arena settings (name, cooldown, time)
+/dodgeball setmaxplayers <arena> <number>  # Set maximum players
+/dodgeball setminplayers <arena> <number>  # Set minimum players
+/dodgeball setstartpos <arena> <number>    # Set spawn point for a specific player
+/dodgeball setlobby                        # Set the main dodgeball lobby
 
-➡️View stats of a player: /dodgeball stats [player]
+### 🌐 Other
+/dodgeball language <hu|en>   # Set script language
+/dodgeball ping               # Check if the script is active
 
-➡️Set the language of the skript: /dodgeball language <hu|en>
+## ⚠️ Development Notice
+This Skript is currently under development.
+Found a bug or have an idea to improve the game?
 
-➡️Skript Check: /dodgeball ping
+## 🗨️ Please DO NOT use GitHub issues for suggestions or bugs!
+Instead, use our official forums to report them.
 
-## HELP
-⚠️ Skript under development!
-If you find any bugs or you have some suggestions please don't write here, to the comments!
-WRITE HERE: https://drum-resources.boards.net/thread/1/dodgeball-skript-issues-bugs-requests
+## 🙏 Thanks
+Thank you for using my Dodgeball Skript!
+If you enjoy it, consider starring the repo or contributing to the project.
 
-
-Thanks for using my skript!
-
-
-# DESCRIPTION
-🔧 Features
-✅ Skript plugin support
-✅ Realistic dodgeball physics (snowballs bounce and roll!)
-✅ Flexible arena editor
-✅ Customizable player count & start positions
-✅ Language support (English & Hungarian)
-✅ Join menu GUI (Coming soon!)
-✅ Player stats tracking
-✅ Simple command system
-
-🧭 Commands
-🎮 Gameplay
-/dodgeball join <arena> — Join a game in the selected arena
-
-/dodgeball menu — Open the arena selection GUI (coming soon)
-
-/dodgeball stats [player] — View your or another player’s stats
-
-🛠️ Arena Setup
-/dodgeball create <arena> — Create a new arena
-
-/dodgeball edit <arena> <name|cooldown|time> <value> — Modify arena settings
-
-/dodgeball setmaxplayers <arena> <number> — Set the maximum number of players
-
-/dodgeball setminplayers <arena> <number> — Set the minimum number of players
-
-/dodgeball setstartpos <arena> <playernumber> — Set the spawn point for a player
-
-/dodgeball setlobby — Set the global dodgeball lobby position
-
-🌐 Other
-/dodgeball language <hu|en> — Set the language of the skript
-
-/dodgeball ping — Test if the skript is running (pong)
-
-⚠️ Notice
-🛠️ This Skript is still under development.
-If you encounter any bugs or have suggestions, please do not comment here — instead, head over to the official forums and share your feedback!
-
-💬 Thank You!
-Thanks for trying out my Dodgeball minigame Skript!
-I hope you enjoy it — and stay tuned for future updates! 🎉
+## 📄 License
+This project is licensed under the MIT License. See LICENSE for details.
