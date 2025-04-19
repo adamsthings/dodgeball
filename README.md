@@ -11,6 +11,17 @@ Dodge, throw, and compete with friends in this fast-paced minigame!
 
 ---
 
+## HOW TO INSTALL? MUST READ
+ - Download the [Skript](https://github.com/SkriptLang/Skript) plugin.
+ - Drag n drop this plugin to your plugins folder
+ - Restart your server
+ - After that drop this .sk file to your Skript/scripts folder.
+ - Restart the server or reload the Skript plugin.
+ - Write /dodgeball ping to ensure that the skript is working well.
+ - If you recive 'Pong' then you're good to go!
+
+---
+
 ## 🚀 Features
 
 - 🎯 **Physics-based snowballs** — they bounce and roll like real dodgeballs!
