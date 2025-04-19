@@ -15,7 +15,7 @@ Dodge, throw, and compete with friends in this fast-paced minigame!
  - Download the [Skript](https://github.com/SkriptLang/Skript) plugin.
  - Drag n drop this plugin to your plugins folder
  - Restart your server
- - After that drop this .sk file to your Skript/scripts folder.
+ - After that drop this .sk file to your Skript/scripts folder. You can find the lastest on the [Releases](https://github.com/adamsthings/dodgeball/releases) page!
  - Restart the server or reload the Skript plugin.
  - Write /dodgeball ping to ensure that the skript is working well.
  - If you recive 'Pong' then you're good to go!
